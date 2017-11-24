@@ -63,6 +63,12 @@ public class CartControllerImpl extends BaseController implements CartController
 				break;
 			}
 		}
+		
+		HashMap<String ,ArrayList> cartHash=new HashMap<String,ArrayList>();
+		ModelAndView mav = new ModelAndView(fileName);
+		if(cart_value==null || cart_value.length()==0){
+			cartHash.put("my_goods_list", null);
+		}else{
 		System.out.println("cart_value="+cart_value);
 		String[] goods_ids=cart_value.split("-");
 		ArrayList goods_id_list=new ArrayList();
@@ -71,21 +77,15 @@ public class CartControllerImpl extends BaseController implements CartController
 		}
 		ArrayList my_goods_list=cartService.myCartList(goods_id_list);
 		
-		HashMap<String ,ArrayList> cartHash=new HashMap<String,ArrayList>();
+		
 		cartHash.put("my_goods_list", my_goods_list);
 		session.setAttribute("cartHash", cartHash);//장바구니 조회 화면에서 바로 주문 시 사용하기 위해서 장바구니 목록을 세션에 저장한다.
-		ModelAndView mav = new ModelAndView(fileName);
+		
+		
+		}
 		mav.addObject("cartHash", cartHash);
-		/*ModelAndView mav = new ModelAndView(fileName);
-		HttpSession session=request.getSession();
-		MemberBean memberBean=(MemberBean)session.getAttribute("member_info");
-		CartBean cartBean=new CartBean();
-		String member_id=memberBean.getMember_id();
-		cartBean.setMember_id(member_id);
-		HashMap<String ,ArrayList> cartHash=cartService.myCartList(cartBean);
-		session.setAttribute("cartHash", cartHash);//장바구니 조회 화면에서 바로 주문 시 사용하기 위해서 장바구니 목록을 세션에 저장한다.
-		mav.addObject("cartHash", cartHash);*/
 		return mav;
+		
 	}
 	 
 

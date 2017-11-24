@@ -62,7 +62,7 @@ public class CartServiceImpl  implements CartService{
 		for(int i=0;i<my_cart_list.size();i++){
 			CartBean bean=(CartBean)my_cart_list.get(i);
 			String goods_id=bean.getGoods_id();
-			for(int j=0;j<cart_list_cookie.size();j++){
+			for(int j=cart_list_cookie.size()-1;j>=0;j--){
 				CartBean bean_cookie=(CartBean)cart_list_cookie.get(j);
 				String goods_id_cookie=bean_cookie.getGoods_id();
 				if(goods_id.equals(goods_id_cookie)){

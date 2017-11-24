@@ -39,18 +39,50 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsList;
 	}
 	
-	public HashMap goodsDetail(String _goods_id) throws Exception {
+	/*public HashMap goodsDetail(String _goods_id) throws Exception {
 		HashMap goodsMap=new HashMap();
 		GoodsBean goodsBean = goodsDao.goodsDetail(_goods_id);
 		goodsMap.put("goods", goodsBean);
 		ArrayList imageList =goodsDao.goodsDetailImage(_goods_id);
 		goodsMap.put("imageList", imageList);
 		
+		ArrayList reco_goods_list =goodsDao.recoGoodsList(_goods_id);
+		goodsMap.put("recoGoodsList", reco_goods_list);
+		
+		ArrayList reco_goods_point=goodsDao.recoGoodsPoint(_goods_id);
+		goodsMap.put("recoGoodsPoint", reco_goods_point);
 		return goodsMap;
 	}
+	*/
+	
+	public HashMap goodsDetail(HashMap detailMap) throws Exception {
+		String _goods_id=(String)detailMap.get("goods_id");
+		HashMap goodsMap=new HashMap();
+		GoodsBean goodsBean = goodsDao.goodsDetail(_goods_id);
+		goodsMap.put("goods", goodsBean);
+		ArrayList imageList =goodsDao.goodsDetailImage(_goods_id);
+		goodsMap.put("imageList", imageList);
+		
+		ArrayList reco_goods_list =goodsDao.recoGoodsList(_goods_id);
+		goodsMap.put("recoGoodsList", reco_goods_list);
+		
+		ArrayList reco_goods_point=goodsDao.recoGoodsPoint(_goods_id);
+		goodsMap.put("recoGoodsPoint", reco_goods_point);
+		
+		//내 추천목록에 등록된 상품 정보 가지고 오기
+		ArrayList my_reco_list=(ArrayList)detailMap.get("my_reco_list");
+		ArrayList my_reco_goods_list=goodsDao.myRecoList(my_reco_list);
+		goodsMap.put("my_reco_goods_list", my_reco_goods_list);
+		return goodsMap;
+	}
+	
 	
 	public ArrayList searchGoods(HashMap searchMap) throws Exception{
 		ArrayList goodsList=goodsDao.searchGoods(searchMap);
 		return goodsList;
+	}
+	
+	public void addShopingReco(ArrayList reco_shoping_list, String recoed_goods_id, String member_id) throws Exception{
+		goodsDao.addShopingReco(reco_shoping_list,recoed_goods_id, member_id);
 	}
 }

@@ -1,6 +1,7 @@
 package com.bookshop01.cart.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,16 +70,20 @@ public class CartDaoImpl  implements  CartDao{
 		return cart_id;
 	}
 	
-	public void addCartFromCookie(ArrayList cart_list) throws Exception{
+	public void addCartFromCookie(ArrayList cart_list_cookie) throws Exception{
 		String goods_id=null;
-		
-		for(int i=0;i<cart_list.size();i++){
+		for(int i=0;i<cart_list_cookie.size();i++){
 			int cart_id=getMaxCartId();
-			CartBean cartBean=(CartBean)cart_list.get(i);
+			CartBean cartBean=(CartBean)cart_list_cookie.get(i);
 			cartBean.setCart_id(cart_id);
 			sqlSession.insert("mapper.cart.addCartFromCookie",cartBean);
 		}
-		
+		/*String[] arr_goods_id=(String[])cart_list_cookie.toArray();
+		HashMap paramMap=new HashMap();
+		paramMap.put("arr_goods_id", arr_goods_id);
+		sqlSession.insert("mapper.cart.proc_addCartFromCookie",paramMap);*/
 	}
+	
+
 
 }

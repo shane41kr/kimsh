@@ -12,4 +12,9 @@ public interface GoodsDao {
 	public ArrayList keywordSearch(String keyword) throws Exception;
 	public ArrayList searchGoods(String searchWord) throws Exception;
 	public ArrayList searchGoods(HashMap searchMap) throws Exception;
+	public ArrayList recoGoodsList(String goods_id) throws Exception;
+	public ArrayList recoGoodsPoint(String goods_id) throws Exception;
+	public ArrayList myRecoList(ArrayList my_reco_list)throws Exception;
+	public void addShopingReco(ArrayList reco_shoping_list, String recoed_goods_id, String member_id) throws Exception;
+	
 }
